@@ -6,6 +6,7 @@ Small utility helping mapping piet colors to a piet program image.
 A use case would be if you get a piet program through printing and scanning. The original piet colors would be lost, but if you succeed in keeping hues distinction, piet_mapper will help associating current colors to original piet colors.
 
 eg:
+```  
   $ ./piet_mapper.py -d 7 -l 24 -o remapped.png scanned_piet.png
   [*] Enumerating colors...
   [+] found 20 colors
@@ -18,13 +19,13 @@ eg:
   [*] Remapping colors and saving remapped image to remapped.png
   [+] done
 
-  $ npiet -v remapped.png                                       
+  $ npiet -v remapped.png
   info: verbose set to 1
   info: using file remapped.png
   info: got 50 x 50 pixel with 256 cols
   info: codelsize guessed is 1 pixel
   CTF{Am1g4_rul3Z}
-
+```
 
 Prerequisite:
   Python Pillow module installed. (https://python-pillow.org/)
@@ -34,7 +35,7 @@ A prep work is required before using piet_mapper, with your favorite image manip
   - the image must be precisely cropped and scaled so that one pixel represents one codel, this also helps eliminating unwanted anti-aliasing
   - hues differentiation should be improved, eg by applying a color profile or whatever helps
 
-
+```
 Usage: piet_mapper.py [-h] [-d DIFF_THRESHOLD] [-l LEVEL_THRESHOLD] [-o OUTPUT] [-v] file
 Trivial Piet cleaner
 positional arguments:                                                                                                                                               
@@ -45,7 +46,7 @@ options:
   -l LEVEL_THRESHOLD, --level_threshold LEVEL_THRESHOLD                                                                                                                                  threshold differentiating two color component values, used to identify to which hue a color belongs                                        
   -o OUTPUT, --output OUTPUT                                                                                                                                                              output file name, default to <name>.remapped.png                                                                                            
   -v, --verbose         displays mapping information
-  
+```
  
   
 DIFF_THRESHOLD is the acceptable delta of any color component. 
@@ -53,6 +54,7 @@ As an example, a DIFF_THRESHOLD of 1 means that any component difference differe
 In case of 20, two colors are considered different if the any component difference is greater or equal to 20.
 Eg: (220, 10, 50) is considered the same color as (239, 1, 32).
 This parameter helps isolating precisely 20 colors in the image:
+```
   > python3 piet_mapper.py -d 20 scanned_piet.png
   [*] Enumerating colors...
   [-] Error: found 19 colors, try decreasing diff threshold
@@ -64,9 +66,10 @@ This parameter helps isolating precisely 20 colors in the image:
   > piet_mapper.py -d 7 scanned_piet.png
   [*] Enumerating colors...
   [+] found 20 colors
-
+```
 
 LEVEL_THRESHOLD is the acceptable delta of any color component while looking for main components of each color. This parameter helps refining color assignment to the six colored hues. As long as assignment is wrong, piet_mapper will fail and color assignment will be displayed.
+```
   $ ./piet_mapper.py -d 7 -l 10 -o remapped.png scanned_piet.png
   [*] Enumerating colors...
   [+] found 20 colors
@@ -104,7 +107,7 @@ LEVEL_THRESHOLD is the acceptable delta of any color component while looking for
                   [242, 245, 170] -> None
   white   (0111):
                   [253, 253, 253] -> None
-        
+```        
 
 OUTPUT is the name of the output file if mapping succeeds. By default, the input file name is used and get ".remapped" appended just before ".png".
 
